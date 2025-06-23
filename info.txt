@@ -1,0 +1,9 @@
+=> All building block to create NN is created in Include folder.
+=> This building block can be used in different NueroCpp project too.
+=> There is main.cpp file, which contain basic code how to use.
+=> Use batch as a input, for single input send single element in batch.
+=> Batch is nothing but vector of NueroVec.
+
+=> in model which consist some model to use put all the file to main folder where inlcude folder exist.
+=> like for iris data simply open folder and copy all the folder and file to outside where this info.txt and inlcude etc folder exist
+=> After copy simple run the script.py file
