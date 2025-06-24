@@ -13,7 +13,8 @@ public:
         return TanhCalculate(input);
     }
 
-    NeuroVec<NeuroVec<double>> Backward(NeuroVec<NeuroVec<double>> &prevGrad, NeuroVec<NeuroVec<double>> &savedInput)
+    NeuroVec<NeuroVec<double>> Backward(NeuroVec<NeuroVec<double>> &prevGrad, NeuroVec<NeuroVec<double>> &lastCalOutput)
     {   
+        return TanhDerCalc(prevGrad, lastCalOutput);
     }
 };

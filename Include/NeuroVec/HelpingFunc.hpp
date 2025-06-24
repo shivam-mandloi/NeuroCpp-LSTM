@@ -213,7 +213,7 @@ NeuroVec<NeuroVec<double>> TanhDerCalc(NeuroVec<NeuroVec<double>> &prevGrad, Neu
     {
         for(int j = 0; j < lastCalOutput[i].len; j++)
         {
-            res = prevGrad[i][j] * (1 - lastCalOutput[i][j]);
+            res[i][j] = prevGrad[i][j] * (1 - lastCalOutput[i][j]);
         }
     }
     return res;
