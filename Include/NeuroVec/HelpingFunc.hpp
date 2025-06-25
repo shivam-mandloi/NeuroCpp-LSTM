@@ -3,6 +3,8 @@
 #include "NeuroVec.hpp"
 #include "SGD.hpp"
 #include "Adam.hpp"
+
+#include <utility>
 #include <cmath>
 
 template<typename T>
@@ -118,7 +120,7 @@ NeuroVec<NeuroVec<double>> LinearF(NeuroVec<NeuroVec<double>> &input, NeuroVec<N
     return resMat;
 }
 
-NeuroVec<NeuroVec<double>> LinearBAndUpdate(NeuroVec<NeuroVec<double>> &input, NeuroVec<NeuroVec<double>> &prevGrad, NeuroVec<NeuroVec<double>> &weight, NeuroVec<double> &bias, Adam adm)
+std::pair<NeuroVec<NeuroVec<double>>, NeuroVec<double>> LinearBAndUpdate(NeuroVec<NeuroVec<double>> &input, NeuroVec<NeuroVec<double>> &prevGrad, NeuroVec<NeuroVec<double>> &weight, NeuroVec<double> &bias, NeuroVec<NeuroVec<double>> &_dldx)
 {
     NeuroVec<NeuroVec<double>> dldw = CreateMatrix<double>(weight.len, weight[0].len, 0);
     NeuroVec<double> dldb = CreateVector<double>(bias.len, 0);
@@ -153,9 +155,12 @@ NeuroVec<NeuroVec<double>> LinearBAndUpdate(NeuroVec<NeuroVec<double>> &input, N
             dldx[i][j] = temp;
         }
     }
-    adm.Update(&weight, &bias, dldw, dldb);
-    // sgd.Update(weight, bias, dldw, dldb);
-    return dldx;
+
+    std::pair<NeuroVec<NeuroVec<double>>, NeuroVec<double>> res;
+    res.first = dldw;
+    res.second = dldb;
+    _dldx = dldx;
+    return res;
 }
 
 NeuroVec<double> MseForward(NeuroVec<NeuroVec<double>> &predicted, NeuroVec<NeuroVec<double>> &groundTruth)

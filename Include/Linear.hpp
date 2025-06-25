@@ -12,6 +12,9 @@ public:
     {
         weight = CreateRandomMatrix<double>(outputDim, inputDim);
         bias = CreateRandomVector<double>(outputDim);
+
+        updateWeight = CreateMatrix<double>(outputDim, inputDim, 0);
+        updateBias = CreateVector<double>(outputDim, 0);
     }
 
     NeuroVec<NeuroVec<double>> Forward(NeuroVec<NeuroVec<double>> &input)
@@ -23,10 +26,24 @@ public:
 
     NeuroVec<NeuroVec<double>> Backward(NeuroVec<NeuroVec<double>> &prevGrad, NeuroVec<NeuroVec<double>> &saveInput)
     {
-        return LinearBAndUpdate(saveInput, prevGrad, weight, bias, adam);
+        NeuroVec<NeuroVec<double>> dldx;
+        std::pair<NeuroVec<NeuroVec<double>>, NeuroVec<double>> res = LinearBAndUpdate(saveInput, prevGrad, weight, bias, dldx);
+        updateWeight = mat2matAdd<double>(res.first, updateWeight);
+        updateBias = vec2vecAdd<double>(res.second, updateBias);
+        return dldx;
+    }
+
+    void Update()
+    {
+        // adm.Update(&weight, &bias, dldw, dldb);
+        // sgd.Update(weight, bias, dldw, dldb);
+        adam.Update(&weight, &bias, updateWeight, updateBias);
+        
+        updateWeight = CreateMatrix<double>(weight.len, weight[0].len, 0);
+        updateBias = CreateVector<double>(bias.len, 0);
     }
 private:
-    NeuroVec<NeuroVec<double>> weight;
-    NeuroVec<double> bias;
+    NeuroVec<NeuroVec<double>> weight, updateWeight;
+    NeuroVec<double> bias, updateBias;
     Adam adam;
 };
