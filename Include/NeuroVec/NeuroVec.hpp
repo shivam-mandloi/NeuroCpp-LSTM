@@ -68,7 +68,7 @@ NeuroVec<NeuroVec<T>> mat2matAdd(NeuroVec<NeuroVec<T>> mat1, NeuroVec<NeuroVec<T
 template<typename T>
 NeuroVec<T> vec2vecAdd(NeuroVec<T> vec1, NeuroVec<T> vec2)
 {
-    NeuroVec<NeuroVec<T>> res = CreateVector<double>(vec1.len, 0);
+    NeuroVec<T> res = CreateVector<double>(vec1.len, 0);
     for(int i = 0; i < vec1.len; i++)
     {
         res[i] = vec1[i] + vec2[i];

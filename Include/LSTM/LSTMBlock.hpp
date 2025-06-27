@@ -73,7 +73,11 @@ public:
     {
         // consist all the grad of loss wrt to hidden, context and input
         NeuroVec<NeuroVec<double>> nextHiddenGrad, nextINputGrad;
-
+        // std::cout << "Hidden" << std::endl;
+        // Print<double>(hiddenGrad);
+        // std::cout << std::endl;
+        // std::cout << "Context" << std::endl;
+        // Print<double>(contextGrad);
         // Output Gate
         std::pair<NeuroVec<NeuroVec<double>>, NeuroVec<NeuroVec<double>>> gradOut = product.Backward(hiddenGrad, savedOtInput1[index], savedOtInput2[index]);
         hiddenGrad = sf.Backward(gradOut.first, oGateSave[index]);
@@ -93,8 +97,8 @@ public:
         
         NeuroVec<NeuroVec<double>> dldi = tanh.Backward(gradOut.first, prdctGtI1[index]);
 
-        nextHiddenGrad = mat2matAdd<double>(nextHiddenGrad, Ui.Backward(dldi, savedInputU[index]));
-        nextINputGrad = mat2matAdd<double>(nextINputGrad, Wi.Backward(dldi, savedInputW[index]));
+        nextHiddenGrad = mat2matAdd<double>(nextHiddenGrad, Ug.Backward(dldi, savedInputU[index]));
+        nextINputGrad = mat2matAdd<double>(nextINputGrad, Wg.Backward(dldi, savedInputW[index]));
         
         // Forget Gate
         gradOut = product.Backward(dldc, forgetPrI1[index], forgetPrI2[index]);

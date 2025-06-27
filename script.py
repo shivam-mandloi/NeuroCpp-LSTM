@@ -23,6 +23,7 @@ class RunScript:
         if result.returncode == 0:
             print(f"[*]Compilation successful!\nFile Name: {self.filename}")
         else:
+            print("[#]Fuck You")
             print("[!]Compilation failed")
             print("Error message:")
             print(result.stderr.decode())

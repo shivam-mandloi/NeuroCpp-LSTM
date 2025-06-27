@@ -125,7 +125,6 @@ std::pair<NeuroVec<NeuroVec<double>>, NeuroVec<double>> LinearBAndUpdate(NeuroVe
     NeuroVec<NeuroVec<double>> dldw = CreateMatrix<double>(weight.len, weight[0].len, 0);
     NeuroVec<double> dldb = CreateVector<double>(bias.len, 0);
     NeuroVec<NeuroVec<double>> dldx = CreateMatrix<double>(input.len, weight[0].len, 0);
-    SGD sgd;
     for(int i = 0; i < prevGrad.len; i++)
     {
         for(int j = 0; j < prevGrad[i].len; j++)
@@ -218,7 +217,7 @@ NeuroVec<NeuroVec<double>> TanhDerCalc(NeuroVec<NeuroVec<double>> &prevGrad, Neu
     {
         for(int j = 0; j < lastCalOutput[i].len; j++)
         {
-            res[i][j] = prevGrad[i][j] * (1 - lastCalOutput[i][j]);
+            res[i][j] = prevGrad[i][j] * (1 - (lastCalOutput[i][j] * lastCalOutput[i][j]));
         }
     }
     return res;

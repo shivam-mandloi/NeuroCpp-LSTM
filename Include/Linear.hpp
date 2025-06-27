@@ -35,12 +35,16 @@ public:
 
     void Update()
     {
-        // adm.Update(&weight, &bias, dldw, dldb);
-        // sgd.Update(weight, bias, dldw, dldb);
-        adam.Update(&weight, &bias, updateWeight, updateBias);
-        
+        adam.Update(&weight, &bias, updateWeight, updateBias, 0.001);
+
+        // Print<double>(updateWeight);
+        // std::cout << std::endl << std::endl << std::endl;
+        // Print<double>(updateBias);
+        // std::cout << std::endl << std::endl << std::endl;
+ 
         updateWeight = CreateMatrix<double>(weight.len, weight[0].len, 0);
         updateBias = CreateVector<double>(bias.len, 0);
+
     }
 private:
     NeuroVec<NeuroVec<double>> weight, updateWeight;

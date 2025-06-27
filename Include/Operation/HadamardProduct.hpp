@@ -14,7 +14,7 @@ public:
         NeuroVec<NeuroVec<double>> res = CreateMatrix<double>(vec1.len, vec1[0].len, 0);
         for(int i = 0; i < vec1.len; i++)
         {
-            for(int j = 0; j < vec1.len; j++)
+            for(int j = 0; j < vec1[i].len; j++)
             {
                 res[i][j] = vec1[i][j] * vec2[i][j];
             }
@@ -29,7 +29,7 @@ public:
         NeuroVec<NeuroVec<double>> vec2Grad = CreateMatrix<double>(vec1.len, vec1[0].len, 0);
         for(int i = 0; i < vec1.len; i++)
         {
-            for(int j = 0; j < vec2.len; j++)
+            for(int j = 0; j < vec1[i].len; j++)
             {
                 vec1Grad[i][j] = prevGrad[i][j] * vec2[i][j];
                 vec2Grad[i][j] = prevGrad[i][j] * vec1[i][j];
